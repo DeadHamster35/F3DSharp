@@ -92,26 +92,16 @@ namespace F3DSharp
 
         public byte[] gsSPDisplayList(uint Address)
         {
-            MemoryStream memoryStream = new MemoryStream();
-            BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
-
-            binaryWriter.Write(BigEndian(
+            return BigEndian(
                 BitConverter.GetBytes(gDisplayList | Address)
-                ));
-
-            return memoryStream.ToArray();
+                );
         }
 
         public byte[] gsSPEndDisplayList()
         {
-            MemoryStream memoryStream = new MemoryStream();
-            BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
-
-            binaryWriter.Write(BigEndian(
+            return BigEndian(
                 BitConverter.GetBytes(gEndDisplayList)
-                ));
-
-            return memoryStream.ToArray();
+                );
         }
 
 
@@ -151,11 +141,15 @@ namespace F3DSharp
         }
         public byte[] gsDPTileSync()
         {
-            return BigEndian(BitConverter.GetBytes(gRDPTileSync));
+            return BigEndian(
+                BitConverter.GetBytes(gRDPTileSync)
+                );
         }
         public byte[] gsDPLoadSync()
         {
-            return BigEndian(BitConverter.GetBytes(gRDPLoadSync));
+            return BigEndian(
+                BitConverter.GetBytes(gRDPLoadSync)
+                );
         }
 
         public byte[] gsDPLoadBlock(UInt32 Tile, UInt32 ULS, UInt32 ULT, UInt32 LRS, UInt32 DXT)
