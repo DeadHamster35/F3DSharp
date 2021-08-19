@@ -1,0 +1,6 @@
+E:\software\F3DSharp\F3DSharp\bin\Release\F3DSharp.dll
+E:\software\F3DSharp\F3DSharp\bin\Release\F3DSharp.pdb
+E:\software\F3DSharp\F3DSharp\obj\Release\F3DSharp.csproj.CoreCompileInputs.cache
+E:\software\F3DSharp\F3DSharp\obj\Release\F3DSharp.dll
+E:\software\F3DSharp\F3DSharp\obj\Release\F3DSharp.pdb
+E:\software\F3DSharp\F3DSharp\obj\Release\F3DSharp.csprojAssemblyReference.cache
