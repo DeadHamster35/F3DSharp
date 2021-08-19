@@ -3,22 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+
+
 namespace F3DSharp
 {
     public class F3DEX095
     {
 
-        private const UInt32 gDrawTri1 = 0xBF000000;
-        private const UInt32 gDrawTri2 = 0xB1000000;
-        private const UInt32 gLoadVert = 0x04000000;
-        private const UInt32 gDisplayList = 0x06000000;
-        private const UInt32 gEndDisplayList = 0xB8000000;
-        private const UInt32 gLoadBlock = 0xF3000000;
-        private const UInt32 gSetTile = 0xF5000000;
-        private const UInt32 gSetTImage = 0xFD000000;
-        private const UInt32 gSetCImage = 0xFF000000;
-        private const UInt32 gRDPTileSync = 0xE8000000;
-        private const UInt32 gRDPLoadSync = 0xE8000000;
+        F3DEX095_OpCodes OpCode = new F3DEX095_OpCodes();
 
         public enum ImageFormats : byte
         {
@@ -36,7 +28,7 @@ namespace F3DSharp
             Bit32 = 3
         }
 
-
+        
         public uint[] GetIndexes(int IndexA, int IndexB, int IndexC)
         {
             return new uint[] { Convert.ToUInt32(IndexA), Convert.ToUInt32(IndexB), Convert.ToUInt32(IndexC) };
@@ -63,7 +55,7 @@ namespace F3DSharp
             BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
 
             binaryWriter.Write(BigEndian(
-                BitConverter.GetBytes(gDrawTri1))
+                BitConverter.GetBytes(OpCode.G_TRI1))
                 );
 
             binaryWriter.Write(BigEndian(
@@ -80,7 +72,7 @@ namespace F3DSharp
 
 
             binaryWriter.Write(BigEndian(
-                BitConverter.GetBytes(Convert.ToUInt32(gDrawTri2 | (VertIndexesA[2] * 2 << 16) | (VertIndexesA[1] * 2 << 8) | (VertIndexesA[0] * 2))))
+                BitConverter.GetBytes(Convert.ToUInt32(OpCode.G_TRI2 | (VertIndexesA[2] * 2 << 16) | (VertIndexesA[1] * 2 << 8) | (VertIndexesA[0] * 2))))
                 );
 
             binaryWriter.Write(BigEndian(
@@ -93,14 +85,14 @@ namespace F3DSharp
         public byte[] gsSPDisplayList(uint Address)
         {
             return BigEndian(
-                BitConverter.GetBytes(gDisplayList | Address)
+                BitConverter.GetBytes(OpCode.G_DL | Address)
                 );
         }
 
         public byte[] gsSPEndDisplayList()
         {
             return BigEndian(
-                BitConverter.GetBytes(gEndDisplayList)
+                BitConverter.GetBytes(OpCode.G_ENDDL)
                 );
         }
 
@@ -112,7 +104,7 @@ namespace F3DSharp
 
 
             binaryWriter.Write(BigEndian(
-            BitConverter.GetBytes(Convert.ToUInt32(gLoadVert | (Index * 2) << 16) | (Count << 10) | ((0x10 * Count) - 1))
+            BitConverter.GetBytes(Convert.ToUInt32(OpCode.G_VTX | (Index * 2) << 16) | (Count << 10) | ((0x10 * Count) - 1))
             ));
 
             binaryWriter.Write(BigEndian(
@@ -128,7 +120,7 @@ namespace F3DSharp
             BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
 
             binaryWriter.Write(BigEndian(
-                BitConverter.GetBytes(Convert.ToUInt32(gSetTile | (((uint)Format & 0x7) << 21) | ((uint)Size & 0x3) << 19) | ((Line & 0x1FF) << 9) | (TMem & 0x1FF))
+                BitConverter.GetBytes(Convert.ToUInt32(OpCode.G_SETTILE | (((uint)Format & 0x7) << 21) | ((uint)Size & 0x3) << 19) | ((Line & 0x1FF) << 9) | (TMem & 0x1FF))
                 ));
 
             binaryWriter.Write(BigEndian(
@@ -142,13 +134,13 @@ namespace F3DSharp
         public byte[] gsDPTileSync()
         {
             return BigEndian(
-                BitConverter.GetBytes(gRDPTileSync)
+                BitConverter.GetBytes(OpCode.G_RDPTILESYNC)
                 );
         }
         public byte[] gsDPLoadSync()
         {
             return BigEndian(
-                BitConverter.GetBytes(gRDPLoadSync)
+                BitConverter.GetBytes(OpCode.G_RDPLOADSYNC)
                 );
         }
 
@@ -158,7 +150,7 @@ namespace F3DSharp
             BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
 
             binaryWriter.Write(BigEndian(
-                BitConverter.GetBytes(Convert.ToUInt32(gLoadBlock | ((ULS & 0xFFF) << 12) | (ULT & 0xFFF)))
+                BitConverter.GetBytes(Convert.ToUInt32(OpCode.G_LOADBLOCK | ((ULS & 0xFFF) << 12) | (ULT & 0xFFF)))
                 ));
 
             binaryWriter.Write(BigEndian(
@@ -187,14 +179,28 @@ namespace F3DSharp
 
         public byte[] gsDPSetColorImage(ImageFormats Format, BitSizes Size, uint Width, UInt32 Address)
         {
-            return gsSetImage(gSetCImage, Format, Size, Width, Address);
+            return gsSetImage(OpCode.G_SETCIMG, Format, Size, Width, Address);
         }
         public byte[] gsDPSetTextureImage(ImageFormats Format, BitSizes Size, uint Width, UInt32 Address)
         {
-            return gsSetImage(gSetTImage, Format, Size, Width, Address);
+            return gsSetImage(OpCode.G_SETTIMG, Format, Size, Width, Address);
         }
+        
+        public byte[] gsNinSetupTileDescription(UInt32 TextureAddress, ImageFormats TextureFormat, BitSizes Size, uint Width, uint Height, uint TextureMemory, uint Tile, uint CS, uint MS, uint SS, uint CT, uint MT, uint ST))
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+            
+            binaryWriter.Write(
+                gsDPTileSync()
+                );
 
-
+            binaryWriter.Write(
+                gsDPSetTile(TextureFormat, Size, 0, TextureMemory, Tile, 0, 0, 0, 0, 0, 0, 0)
+                );
+	        gsDPSetTile(fmt, siz, ((((width) * siz##_LINE_BYTES)+7)>>3),tmem,tt,0,ct,mt,st,cs,ms,ss),	\
+	        gsDPSetTileSize(tt, 0, 0, (width - 1) << G_TEXTURE_IMAGE_FRAC, (height - 1) << G_TEXTURE_IMAGE_FRAC)
+        }
         public byte[] gsNinLoadTextureImage(UInt32 TextureAddress, ImageFormats TextureFormat, BitSizes Size, uint Width, uint Height, uint TextureMemory, uint Tile)
         {
             MemoryStream memoryStream = new MemoryStream();
