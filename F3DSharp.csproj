@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="F3DEX 0.95 Parameters.cs" />
     <Compile Include="F3DEX 0.95 OpCodes.cs" />
     <Compile Include="F3DEX 0.95.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
