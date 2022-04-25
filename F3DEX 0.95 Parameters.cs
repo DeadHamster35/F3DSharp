@@ -69,9 +69,19 @@ namespace F3DSharp
             "G_CC_HILITERGBDECALA",
             "G_CC_SHADEDECALA",
             "G_CC_BLENDPE",
-            "G_CC_BLENDPEDECALA"
+            "G_CC_BLENDPEDECALA",
+            "G_CC_PASS2",
+            "G_CC_MODULATEI2",
+            "G_CC_MODULATEIA2",
+            "G_CC_MODULATERGB2",
+            "G_CC_MODULATERGBA2",
+            "G_CC_MODULATEI_PRIM2",
+            "G_CC_MODULATEIA_PRIM2",
+            "G_CC_MODULATERGB_PRIM2",
+            "G_CC_MODULATERGBA_PRIM2",
+            "G_CC_DECALRGB2"
+            
         };
-
 
 
         public static string[] RenderModeNames = new string[]
@@ -106,6 +116,9 @@ namespace F3DSharp
             "G_RM_AA_ZB_TEX_TERR2",
             "G_RM_AA_ZB_SUB_TERR",
             "G_RM_AA_ZB_SUB_TERR2",
+            "G_RM_FOG_SHADE_A",
+            "G_RM_FOG_PRIM_A",
+            "G_RM_PASS"
         };
 
         public static string[] ColorCombineNames = new string[]
@@ -355,6 +368,19 @@ namespace F3DSharp
         public static UInt32[] G_CC_SHADEDECALA = new UInt32[] {    ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0] };
         public static UInt32[] G_CC_BLENDPE = new UInt32[] {        ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0] };
         public static UInt32[] G_CC_BLENDPEDECALA = new UInt32[] {  ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0] };
+        
+        public static UInt32[] G_CC_PASS2 = new UInt32[] { ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_COMBINED] };
+        public static UInt32[] G_CC_MODULATEI2 = new UInt32[] { ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE] };
+        public static UInt32[] G_CC_MODULATEIA2 = new UInt32[] { ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0] };
+        public static UInt32[] G_CC_MODULATERGB2 = G_CC_MODULATEI2;
+        public static UInt32[] G_CC_MODULATERGBA2 = G_CC_MODULATEIA2;
+        public static UInt32[] G_CC_MODULATEI_PRIM2 = new UInt32[] { ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE] };
+        public static UInt32[] G_CC_MODULATEIA_PRIM2 = new UInt32[] { ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_0] };
+
+        public static UInt32[] G_CC_MODULATERGB_PRIM2 = G_CC_MODULATEI_PRIM2;
+        public static UInt32[] G_CC_MODULATERGBA_PRIM2 = G_CC_MODULATEIA_PRIM2;
+        public static UInt32[] G_CC_DECALRGB2 = new UInt32[] { ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE] };
+
 
         public static UInt32[][] GCCModes = new UInt32[][] 
         {
@@ -388,12 +414,19 @@ namespace F3DSharp
             G_CC_HILITERGBDECALA,
             G_CC_SHADEDECALA,
             G_CC_BLENDPE,
-            G_CC_BLENDPEDECALA
+            G_CC_BLENDPEDECALA,
+            G_CC_PASS2,
+            G_CC_MODULATEI2,
+            G_CC_MODULATEIA2,
+            G_CC_MODULATERGB2,
+            G_CC_MODULATERGBA2,
+            G_CC_MODULATEI_PRIM2,
+            G_CC_MODULATEIA_PRIM2,
+            G_CC_MODULATERGB_PRIM2,
+            G_CC_MODULATERGBA_PRIM2,
+            G_CC_DECALRGB2
+
         };
-
-
-
-
 
         public static UInt32[] GACModes = new UInt32[]
         {
@@ -1146,6 +1179,9 @@ namespace F3DSharp
         public static UInt32 G_RM_AA_ZB_TEX_TERR2 = RM_AA_ZB_TEX_TERR(2);
         public static UInt32 G_RM_AA_ZB_SUB_TERR = RM_AA_ZB_SUB_TERR(1);
         public static UInt32 G_RM_AA_ZB_SUB_TERR2 = RM_AA_ZB_SUB_TERR(2);
+        public static UInt32 G_RM_FOG_SHADE_A = GBL_c1(G_BL_CLR_FOG, G_BL_A_SHADE, G_BL_CLR_IN, G_BL_1MA);
+        public static UInt32 G_RM_FOG_PRIM_A = GBL_c1(G_BL_CLR_FOG, G_BL_A_FOG, G_BL_CLR_IN, G_BL_1MA);
+        public static UInt32 G_RM_PASS = GBL_c1(G_BL_CLR_IN, G_BL_0, G_BL_CLR_IN, G_BL_1);
 
         public static UInt32[] RenderModes = new UInt32[]
         {
@@ -1179,8 +1215,10 @@ namespace F3DSharp
             G_RM_AA_ZB_TEX_TERR2,
             G_RM_AA_ZB_SUB_TERR,
             G_RM_AA_ZB_SUB_TERR2,
+            G_RM_FOG_SHADE_A,
+            G_RM_FOG_PRIM_A,
+            G_RM_PASS
         };
-
 
 
         public static UInt32 G_RM_RA_ZB_OPA_SURF = RM_RA_ZB_OPA_SURF(1);

@@ -14,8 +14,58 @@ namespace F3DSharp
         {
             return new uint[] { Convert.ToUInt32(IndexA), Convert.ToUInt32(IndexB), Convert.ToUInt32(IndexC) };
         }
+
         public byte[] BigEndian(byte[] Input)
         {
+            Array.Reverse(Input);
+            return Input;
+        }
+
+        public byte[] BigEndian(Double Value)
+        {
+            byte[] Input = BitConverter.GetBytes(Value);
+            Array.Reverse(Input);
+            return Input;
+        }
+        public byte[] BigEndian(Single Value)
+        {
+            byte[] Input = BitConverter.GetBytes(Value);
+            Array.Reverse(Input);
+            return Input;
+        }
+        public byte[] BigEndian(UInt16 Value)
+        {
+            byte[] Input = BitConverter.GetBytes(Value);
+            Array.Reverse(Input);
+            return Input;
+        }
+        public byte[] BigEndian(UInt32 Value)
+        {
+            byte[] Input = BitConverter.GetBytes(Value);
+            Array.Reverse(Input);
+            return Input;
+        }
+        public byte[] BigEndian(Int16 Value)
+        {
+            byte[] Input = BitConverter.GetBytes(Value);
+            Array.Reverse(Input);
+            return Input;
+        }
+        public byte[] BigEndian(Int32 Value)
+        {
+            byte[] Input = BitConverter.GetBytes(Value);
+            Array.Reverse(Input);
+            return Input;
+        }
+        public byte[] BigEndian(Int64 Value)
+        {
+            byte[] Input = BitConverter.GetBytes(Value);
+            Array.Reverse(Input);
+            return Input;
+        }
+        public byte[] BigEndian(UInt64 Value)
+        {
+            byte[] Input = BitConverter.GetBytes(Value);
             Array.Reverse(Input);
             return Input;
         }
