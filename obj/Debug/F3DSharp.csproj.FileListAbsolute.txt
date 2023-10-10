@@ -4,3 +4,9 @@ E:\software\F3DSharp\F3DSharp\bin\Debug\F3DSharp.dll
 E:\software\F3DSharp\F3DSharp\bin\Debug\F3DSharp.pdb
 E:\software\F3DSharp\F3DSharp\obj\Debug\F3DSharp.dll
 E:\software\F3DSharp\F3DSharp\obj\Debug\F3DSharp.pdb
+C:\Users\AuditorFOB\Desktop\Code\F3DSharp\bin\Debug\F3DSharp.dll
+C:\Users\AuditorFOB\Desktop\Code\F3DSharp\bin\Debug\F3DSharp.pdb
+C:\Users\AuditorFOB\Desktop\Code\F3DSharp\obj\Debug\F3DSharp.csproj.AssemblyReference.cache
+C:\Users\AuditorFOB\Desktop\Code\F3DSharp\obj\Debug\F3DSharp.csproj.CoreCompileInputs.cache
+C:\Users\AuditorFOB\Desktop\Code\F3DSharp\obj\Debug\F3DSharp.dll
+C:\Users\AuditorFOB\Desktop\Code\F3DSharp\obj\Debug\F3DSharp.pdb

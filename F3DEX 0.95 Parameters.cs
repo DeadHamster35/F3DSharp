@@ -854,6 +854,90 @@ namespace F3DSharp
                 ZMODE_OPA | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA);
             }
         }
+
+
+        public static UInt32 RM_AA_OPA_DECAL(UInt32 clk)
+        {
+            if (clk == 1)
+            {
+                return AA_EN  | IM_RD | CVG_DST_WRAP | ALPHA_CVG_SEL |
+                ZMODE_DEC | GBL_c1(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_A_MEM);
+            }
+            else
+            {
+                return AA_EN  | IM_RD | CVG_DST_WRAP | ALPHA_CVG_SEL |
+                ZMODE_DEC | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_A_MEM);
+            }
+        }
+
+        public static UInt32 RM_RA_OPA_DECAL(UInt32 clk)
+        {
+            if (clk == 1)
+            {
+                return AA_EN  | CVG_DST_WRAP | ALPHA_CVG_SEL |
+                ZMODE_DEC | GBL_c1(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_A_MEM);
+            }
+            else
+            {
+                return AA_EN  | CVG_DST_WRAP | ALPHA_CVG_SEL |
+                ZMODE_DEC | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_A_MEM);
+            }
+        }
+
+        public static UInt32 RM_AA_XLU_DECAL(UInt32 clk)
+        {
+            if (clk == 1)
+            {
+                return AA_EN  | IM_RD | CVG_DST_WRAP | CLR_ON_CVG |
+                FORCE_BL | ZMODE_DEC | GBL_c1(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_A_MEM);
+            }
+            else
+            {
+                return AA_EN  | IM_RD | CVG_DST_WRAP | CLR_ON_CVG |
+                FORCE_BL | ZMODE_DEC | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_A_MEM);
+            }
+        }
+        public static UInt32 RM_AA_OPA_INTER(UInt32 clk)
+        {
+            if (clk == 1)
+            {
+                return AA_EN  | IM_RD | CVG_DST_CLAMP |
+                ALPHA_CVG_SEL | ZMODE_INTER | GBL_c1(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_A_MEM);
+            }
+            else
+            {
+                return AA_EN  | IM_RD | CVG_DST_CLAMP |
+                ALPHA_CVG_SEL | ZMODE_INTER | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_A_MEM);
+            }
+        }
+        public static UInt32 RM_RA_OPA_INTER(UInt32 clk)
+        {
+            if (clk == 1)
+            {
+                return AA_EN  | IM_RD | CVG_DST_CLAMP |
+                ALPHA_CVG_SEL | ZMODE_INTER | GBL_c1(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_A_MEM);
+            }
+            else
+            {
+                return AA_EN  | IM_RD | CVG_DST_CLAMP |
+                ALPHA_CVG_SEL | ZMODE_INTER | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_A_MEM);
+            }
+        }
+
+        public static UInt32 RM_AA_XLU_INTER(UInt32 clk)
+        {
+            if (clk == 1)
+            {
+                return AA_EN  | IM_RD | CVG_DST_WRAP | CLR_ON_CVG |
+                FORCE_BL | ZMODE_INTER | GBL_c1(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA);
+            }
+            else
+            {
+                return AA_EN  | IM_RD | CVG_DST_WRAP | CLR_ON_CVG |
+                FORCE_BL | ZMODE_INTER | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA);
+            }
+        }
+
         public static UInt32 RM_AA_XLU_LINE(UInt32 clk)
         {
             if (clk == 1)
@@ -893,6 +977,22 @@ namespace F3DSharp
                 CVG_X_ALPHA | ALPHA_CVG_SEL | ZMODE_OPA | TEX_EDGE | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_A_MEM);
             }
         }
+
+        public static UInt32 RM_AA_TEX_INTER(UInt32 clk)
+        {
+            if (clk == 1)
+            {
+                return AA_EN | IM_RD | CVG_DST_CLAMP |
+                CVG_X_ALPHA | ALPHA_CVG_SEL | ZMODE_INTER | TEX_EDGE | GBL_c1(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_A_MEM);
+            }
+            else
+            {
+                return AA_EN | IM_RD | CVG_DST_CLAMP |
+                CVG_X_ALPHA | ALPHA_CVG_SEL | ZMODE_INTER | TEX_EDGE | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_A_MEM);
+            }
+        }
+
+
         public static UInt32 RM_AA_SUB_SURF(UInt32 clk)
         {
             if (clk == 1)
@@ -1149,39 +1249,6 @@ namespace F3DSharp
             }
         }
 
-        public static UInt32 G_RM_AA_ZB_OPA_SURF = RM_AA_ZB_OPA_SURF(1);
-        public static UInt32 G_RM_AA_ZB_OPA_SURF2 = RM_AA_ZB_OPA_SURF(2);
-        public static UInt32 G_RM_AA_ZB_XLU_SURF = RM_AA_ZB_XLU_SURF(1);
-        public static UInt32 G_RM_AA_ZB_XLU_SURF2 = RM_AA_ZB_XLU_SURF(2);
-        public static UInt32 G_RM_AA_ZB_OPA_DECAL = RM_AA_ZB_OPA_DECAL(1);
-        public static UInt32 G_RM_AA_ZB_OPA_DECAL2 = RM_AA_ZB_OPA_DECAL(2);
-        public static UInt32 G_RM_AA_ZB_XLU_DECAL = RM_AA_ZB_XLU_DECAL(1);
-        public static UInt32 G_RM_AA_ZB_XLU_DECAL2 = RM_AA_ZB_XLU_DECAL(2);
-        public static UInt32 G_RM_AA_ZB_OPA_INTER = RM_AA_ZB_OPA_INTER(1);
-        public static UInt32 G_RM_AA_ZB_OPA_INTER2 = RM_AA_ZB_OPA_INTER(2);
-        public static UInt32 G_RM_AA_ZB_XLU_INTER = RM_AA_ZB_XLU_INTER(1);
-        public static UInt32 G_RM_AA_ZB_XLU_INTER2 = RM_AA_ZB_XLU_INTER(2);
-        public static UInt32 G_RM_AA_ZB_XLU_LINE = RM_AA_ZB_XLU_LINE(1);
-        public static UInt32 G_RM_AA_ZB_XLU_LINE2 = RM_AA_ZB_XLU_LINE(2);
-        public static UInt32 G_RM_AA_ZB_DEC_LINE = RM_AA_ZB_DEC_LINE(1);
-        public static UInt32 G_RM_AA_ZB_DEC_LINE2 = RM_AA_ZB_DEC_LINE(2);
-        public static UInt32 G_RM_AA_ZB_TEX_EDGE = RM_AA_ZB_TEX_EDGE(1);
-        public static UInt32 G_RM_AA_ZB_TEX_EDGE2 = RM_AA_ZB_TEX_EDGE(2);
-        public static UInt32 G_RM_AA_ZB_TEX_INTER = RM_AA_ZB_TEX_INTER(1);
-        public static UInt32 G_RM_AA_ZB_TEX_INTER2 = RM_AA_ZB_TEX_INTER(2);
-        public static UInt32 G_RM_AA_ZB_SUB_SURF = RM_AA_ZB_SUB_SURF(1);
-        public static UInt32 G_RM_AA_ZB_SUB_SURF2 = RM_AA_ZB_SUB_SURF(2);
-        public static UInt32 G_RM_AA_ZB_PCL_SURF = RM_AA_ZB_PCL_SURF(1);
-        public static UInt32 G_RM_AA_ZB_PCL_SURF2 = RM_AA_ZB_PCL_SURF(2);
-        public static UInt32 G_RM_AA_ZB_OPA_TERR = RM_AA_ZB_OPA_TERR(1);
-        public static UInt32 G_RM_AA_ZB_OPA_TERR2 = RM_AA_ZB_OPA_TERR(2);
-        public static UInt32 G_RM_AA_ZB_TEX_TERR = RM_AA_ZB_TEX_TERR(1);
-        public static UInt32 G_RM_AA_ZB_TEX_TERR2 = RM_AA_ZB_TEX_TERR(2);
-        public static UInt32 G_RM_AA_ZB_SUB_TERR = RM_AA_ZB_SUB_TERR(1);
-        public static UInt32 G_RM_AA_ZB_SUB_TERR2 = RM_AA_ZB_SUB_TERR(2);
-        public static UInt32 G_RM_FOG_SHADE_A = GBL_c1(G_BL_CLR_FOG, G_BL_A_SHADE, G_BL_CLR_IN, G_BL_1MA);
-        public static UInt32 G_RM_FOG_PRIM_A = GBL_c1(G_BL_CLR_FOG, G_BL_A_FOG, G_BL_CLR_IN, G_BL_1MA);
-        public static UInt32 G_RM_PASS = GBL_c1(G_BL_CLR_IN, G_BL_0, G_BL_CLR_IN, G_BL_1);
 
         public static UInt32[] RenderModes = new UInt32[]
         {
@@ -1217,8 +1284,76 @@ namespace F3DSharp
             G_RM_AA_ZB_SUB_TERR2,
             G_RM_FOG_SHADE_A,
             G_RM_FOG_PRIM_A,
-            G_RM_PASS
+            G_RM_PASS,
+            G_RM_AA_OPA_SURF,
+            G_RM_AA_OPA_SURF2,
+            G_RM_AA_XLU_SURF,
+            G_RM_AA_XLU_SURF2,
+            G_RM_AA_OPA_DECAL,
+            G_RM_AA_OPA_DECAL2,
+            G_RM_AA_XLU_DECAL,
+            G_RM_AA_XLU_DECAL2,
+            G_RM_AA_OPA_INTER,
+            G_RM_AA_OPA_INTER2,
+            G_RM_AA_XLU_INTER,
+            G_RM_AA_XLU_INTER2,
+            G_RM_AA_XLU_LINE,
+            G_RM_AA_XLU_LINE2,
+            G_RM_AA_DEC_LINE,
+            G_RM_AA_DEC_LINE2,
+            G_RM_AA_TEX_EDGE,
+            G_RM_AA_TEX_EDGE2,
+            G_RM_AA_TEX_INTER,
+            G_RM_AA_TEX_INTER2,
+            G_RM_AA_SUB_SURF,
+            G_RM_AA_SUB_SURF2,
+            G_RM_AA_PCL_SURF,
+            G_RM_AA_PCL_SURF2,
+            G_RM_AA_OPA_TERR,
+            G_RM_AA_OPA_TERR2,
+            G_RM_AA_TEX_TERR,
+            G_RM_AA_TEX_TERR2,
+            G_RM_AA_SUB_TERR,
+            G_RM_AA_SUB_TERR2
         };
+
+        public static UInt32 G_RM_AA_ZB_OPA_SURF = RM_AA_ZB_OPA_SURF(1);
+        public static UInt32 G_RM_AA_ZB_OPA_SURF2 = RM_AA_ZB_OPA_SURF(2);
+        public static UInt32 G_RM_AA_ZB_XLU_SURF = RM_AA_ZB_XLU_SURF(1);
+        public static UInt32 G_RM_AA_ZB_XLU_SURF2 = RM_AA_ZB_XLU_SURF(2);
+        public static UInt32 G_RM_AA_ZB_OPA_DECAL = RM_AA_ZB_OPA_DECAL(1);
+        public static UInt32 G_RM_AA_ZB_OPA_DECAL2 = RM_AA_ZB_OPA_DECAL(2);
+        public static UInt32 G_RM_AA_ZB_XLU_DECAL = RM_AA_ZB_XLU_DECAL(1);
+        public static UInt32 G_RM_AA_ZB_XLU_DECAL2 = RM_AA_ZB_XLU_DECAL(2);
+        public static UInt32 G_RM_AA_ZB_OPA_INTER = RM_AA_ZB_OPA_INTER(1);
+        public static UInt32 G_RM_AA_ZB_OPA_INTER2 = RM_AA_ZB_OPA_INTER(2);
+        public static UInt32 G_RM_AA_ZB_XLU_INTER = RM_AA_ZB_XLU_INTER(1);
+        public static UInt32 G_RM_AA_ZB_XLU_INTER2 = RM_AA_ZB_XLU_INTER(2);
+        public static UInt32 G_RM_AA_ZB_XLU_LINE = RM_AA_ZB_XLU_LINE(1);
+        public static UInt32 G_RM_AA_ZB_XLU_LINE2 = RM_AA_ZB_XLU_LINE(2);
+        public static UInt32 G_RM_AA_ZB_DEC_LINE = RM_AA_ZB_DEC_LINE(1);
+        public static UInt32 G_RM_AA_ZB_DEC_LINE2 = RM_AA_ZB_DEC_LINE(2);
+        public static UInt32 G_RM_AA_ZB_TEX_EDGE = RM_AA_ZB_TEX_EDGE(1);
+        public static UInt32 G_RM_AA_ZB_TEX_EDGE2 = RM_AA_ZB_TEX_EDGE(2);
+        public static UInt32 G_RM_AA_ZB_TEX_INTER = RM_AA_ZB_TEX_INTER(1);
+        public static UInt32 G_RM_AA_ZB_TEX_INTER2 = RM_AA_ZB_TEX_INTER(2);
+        public static UInt32 G_RM_AA_ZB_SUB_SURF = RM_AA_ZB_SUB_SURF(1);
+        public static UInt32 G_RM_AA_ZB_SUB_SURF2 = RM_AA_ZB_SUB_SURF(2);
+        public static UInt32 G_RM_AA_ZB_PCL_SURF = RM_AA_ZB_PCL_SURF(1);
+        public static UInt32 G_RM_AA_ZB_PCL_SURF2 = RM_AA_ZB_PCL_SURF(2);
+        public static UInt32 G_RM_AA_ZB_OPA_TERR = RM_AA_ZB_OPA_TERR(1);
+        public static UInt32 G_RM_AA_ZB_OPA_TERR2 = RM_AA_ZB_OPA_TERR(2);
+        public static UInt32 G_RM_AA_ZB_TEX_TERR = RM_AA_ZB_TEX_TERR(1);
+        public static UInt32 G_RM_AA_ZB_TEX_TERR2 = RM_AA_ZB_TEX_TERR(2);
+        public static UInt32 G_RM_AA_ZB_SUB_TERR = RM_AA_ZB_SUB_TERR(1);
+        public static UInt32 G_RM_AA_ZB_SUB_TERR2 = RM_AA_ZB_SUB_TERR(2);
+
+
+        public static UInt32 G_RM_FOG_SHADE_A = GBL_c1(G_BL_CLR_FOG, G_BL_A_SHADE, G_BL_CLR_IN, G_BL_1MA);
+        public static UInt32 G_RM_FOG_PRIM_A = GBL_c1(G_BL_CLR_FOG, G_BL_A_FOG, G_BL_CLR_IN, G_BL_1MA);
+        public static UInt32 G_RM_PASS = GBL_c1(G_BL_CLR_IN, G_BL_0, G_BL_CLR_IN, G_BL_1);
+
+
 
 
         public static UInt32 G_RM_RA_ZB_OPA_SURF = RM_RA_ZB_OPA_SURF(1);
@@ -1228,16 +1363,27 @@ namespace F3DSharp
         public static UInt32 G_RM_RA_ZB_OPA_INTER = RM_RA_ZB_OPA_INTER(1);
         public static UInt32 G_RM_RA_ZB_OPA_INTER2 = RM_RA_ZB_OPA_INTER(2);
 
+
         public static UInt32 G_RM_AA_OPA_SURF = RM_AA_OPA_SURF(1);
         public static UInt32 G_RM_AA_OPA_SURF2 = RM_AA_OPA_SURF(2);
         public static UInt32 G_RM_AA_XLU_SURF = RM_AA_XLU_SURF(1);
         public static UInt32 G_RM_AA_XLU_SURF2 = RM_AA_XLU_SURF(2);
+        public static UInt32 G_RM_AA_OPA_DECAL = RM_AA_OPA_DECAL(1);
+        public static UInt32 G_RM_AA_OPA_DECAL2 = RM_AA_OPA_DECAL(2);
+        public static UInt32 G_RM_AA_XLU_DECAL = RM_AA_XLU_DECAL(1);
+        public static UInt32 G_RM_AA_XLU_DECAL2 = RM_AA_XLU_DECAL(2);
+        public static UInt32 G_RM_AA_OPA_INTER = RM_AA_OPA_INTER(1);
+        public static UInt32 G_RM_AA_OPA_INTER2 = RM_AA_OPA_INTER(2);
+        public static UInt32 G_RM_AA_XLU_INTER = RM_AA_XLU_INTER(1);
+        public static UInt32 G_RM_AA_XLU_INTER2 = RM_AA_XLU_INTER(2);
         public static UInt32 G_RM_AA_XLU_LINE = RM_AA_XLU_LINE(1);
         public static UInt32 G_RM_AA_XLU_LINE2 = RM_AA_XLU_LINE(2);
         public static UInt32 G_RM_AA_DEC_LINE = RM_AA_DEC_LINE(1);
         public static UInt32 G_RM_AA_DEC_LINE2 = RM_AA_DEC_LINE(2);
         public static UInt32 G_RM_AA_TEX_EDGE = RM_AA_TEX_EDGE(1);
         public static UInt32 G_RM_AA_TEX_EDGE2 = RM_AA_TEX_EDGE(2);
+        public static UInt32 G_RM_AA_TEX_INTER = RM_AA_TEX_INTER(1);
+        public static UInt32 G_RM_AA_TEX_INTER2 = RM_AA_TEX_INTER(2);
         public static UInt32 G_RM_AA_SUB_SURF = RM_AA_SUB_SURF(1);
         public static UInt32 G_RM_AA_SUB_SURF2 = RM_AA_SUB_SURF(2);
         public static UInt32 G_RM_AA_PCL_SURF = RM_AA_PCL_SURF(1);
@@ -1248,6 +1394,7 @@ namespace F3DSharp
         public static UInt32 G_RM_AA_TEX_TERR2 = RM_AA_TEX_TERR(2);
         public static UInt32 G_RM_AA_SUB_TERR = RM_AA_SUB_TERR(1);
         public static UInt32 G_RM_AA_SUB_TERR2 = RM_AA_SUB_TERR(2);
+
 
         public static UInt32 G_RM_RA_OPA_SURF = RM_RA_OPA_SURF(1);
         public static UInt32 G_RM_RA_OPA_SURF2 = RM_RA_OPA_SURF(2);
