@@ -164,6 +164,22 @@ namespace F3DSharp
             return memoryStream.ToArray();
         }
 
+        public byte[] gsSPCullDisplayList(uint StartIndex, uint EndIndex)
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+
+            binaryWriter.Write(BigEndian(
+                BitConverter.GetBytes(Convert.ToUInt32(F3DEX095_OpCodes.G_CULLDL | ( ( StartIndex & 0x0F ) * 40) ) )
+                ));
+            binaryWriter.Write(BigEndian(
+                BitConverter.GetBytes(((EndIndex + 1) & 0x0F) * 40)
+                ));
+
+
+            return memoryStream.ToArray();
+        }
+
         public byte[] gsSPDisplayList(uint Address)
         {
             MemoryStream memoryStream = new MemoryStream();
@@ -286,7 +302,7 @@ namespace F3DSharp
         */
 
 
-        public byte[] gsDPLoadTLUT_pal256(UInt32 Palette, UInt32 DRAM)
+            public byte[] gsDPLoadTLUT_pal256(UInt32 Palette, UInt32 DRAM)
         {
             MemoryStream memoryStream = new MemoryStream();
             BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
