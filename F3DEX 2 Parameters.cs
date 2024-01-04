@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace F3DSharp
 {
-    public class F3DEX095_Parameters
+    public class F3DEX2_Parameters
     {
 
         public static UInt32 G_IM_SIZ_4b = 0;
@@ -341,11 +341,11 @@ namespace F3DSharp
         public static UInt32 G_BL_0 = 3;
         public static UInt32 G_ZBUFFER = 0x00000001;
         public static UInt32 G_SHADE = 0x00000004;
-        public static UInt32 G_TEXTURE_ENABLE = 0x00000002;	/* Microcode use only */
-        public static UInt32 G_SHADING_SMOOTH = 0x00000200;	/* flat or smooth shaded */
-        public static UInt32 G_CULL_FRONT = 0x00001000;
-        public static UInt32 G_CULL_BACK = 0x00002000;
-        public static UInt32 G_CULL_BOTH = 0x00003000;	/* To make code cleaner */
+        public static UInt32 G_TEXTURE_ENABLE = 0x00000000;	/* Microcode use only */
+        public static UInt32 G_SHADING_SMOOTH = 0x00200000;	/* flat or smooth shaded */
+        public static UInt32 G_CULL_FRONT = 0x00000200;
+        public static UInt32 G_CULL_BACK = 0x00000400;
+        public static UInt32 G_CULL_BOTH = 0x00000600;	/* To make code cleaner */
         public static UInt32 G_FOG = 0x00010000;
         public static UInt32 G_LIGHTING = 0x00020000;
         public static UInt32 G_TEXTURE_GEN = 0x00040000;

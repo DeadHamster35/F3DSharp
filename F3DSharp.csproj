@@ -42,6 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="F3DEX 2.cs" />
+    <Compile Include="F3DEX 2 OpCodes.cs" />
+    <Compile Include="F3DEX 2 Parameters.cs" />
+    <Compile Include="F3DEX 1.21.cs" />
+    <Compile Include="F3DEX 1.21 Parameters.cs" />
+    <Compile Include="F3DEX 1.21 OpCodes.cs" />
     <Compile Include="F3DEX 0.95 Parameters.cs" />
     <Compile Include="F3DEX 0.95 OpCodes.cs" />
     <Compile Include="F3DEX 0.95.cs" />

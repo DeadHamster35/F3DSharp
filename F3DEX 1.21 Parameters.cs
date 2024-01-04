@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace F3DSharp
 {
-    public class F3DEX095_Parameters
+    public class F3DEX121_Parameters
     {
 
         public static UInt32 G_IM_SIZ_4b = 0;
