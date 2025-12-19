@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace F3DSharp
@@ -302,7 +303,7 @@ namespace F3DSharp
         */
 
 
-            public byte[] gsDPLoadTLUT_pal256(UInt32 Palette, UInt32 DRAM)
+        public byte[] gsDPLoadTLUT_pal256(UInt32 Palette, UInt32 DRAM)
         {
             MemoryStream memoryStream = new MemoryStream();
             BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
@@ -331,9 +332,36 @@ namespace F3DSharp
 
             return memoryStream.ToArray();
         }
+
+
+        public byte[] gsDPLoadTLUT_pal16_Tile(UInt32 Palette, UInt32 DRAM, uint LoadTile)
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+
+
+            // Set up source image in DRAM (palette data in RGBA16 format)
+            binaryWriter.Write(gsDPSetTextureImage(F3DEX095_Parameters.G_IM_FMT_RGBA, F3DEX095_Parameters.G_IM_SIZ_16b, 1, DRAM));
+            binaryWriter.Write(gsDPTileSync());
+            binaryWriter.Write(gsDPSetTile(0, 0, 0,(256 + (((Palette) & 0x0F) * 16)), LoadTile, 0, 0, 0, 0, 0, 0, 0));
+            binaryWriter.Write(gsDPLoadSync());
+            binaryWriter.Write(gsDPLoadTLUTCmd(LoadTile, 15));
+            binaryWriter.Write(gsDPPipeSync());
+
+            return memoryStream.ToArray();
+        }
+
+
         public byte[] gsDPSetTextureLUT(UInt32 Type)
         {
             return gsSPSetOtherMode(F3DEX095_OpCodes.G_SETOTHERMODE_H, Convert.ToUInt32(F3DEX095_Parameters.G_MDSFT_TEXTLUT), 2, Type);
+        }
+
+
+
+        public byte[] gsDPSetTextureFilter(UInt32 Type)
+        {
+            return gsSPSetOtherMode(F3DEX095_OpCodes.G_SETOTHERMODE_H, Convert.ToUInt32(F3DEX095_Parameters.G_MDSFT_TEXTFILT), 2, Type);
         }
 
         public byte[] gsSPSetOtherMode(UInt32 Command, UInt32 Soft, UInt32 Len, UInt32 Data)
@@ -384,7 +412,7 @@ namespace F3DSharp
                 ));
 
             binaryWriter.Write(BigEndian(
-                BitConverter.GetBytes(Convert.ToUInt32(GCCc0w1(GCCA[1], GCCA[3], GCCA[5], GCCA[7]) | GCCc1w1(GCCB[1], GCCB[4], GCCB[6], GCCB[3], GCCB[5], GCCB[5])))
+                BitConverter.GetBytes(Convert.ToUInt32(GCCc0w1(GCCA[1], GCCA[3], GCCA[5], GCCA[7]) | GCCc1w1(GCCB[1], GCCB[4], GCCB[6], GCCB[3], GCCB[5], GCCB[7])))
                 ));
 
             return memoryStream.ToArray();
@@ -513,6 +541,77 @@ namespace F3DSharp
             return memoryStream.ToArray();
         }
 
+
+        public byte[] gsDPSetCycleType(UInt32 Type)
+        {
+            return gsSPSetOtherMode(F3DEX095_OpCodes.G_SETOTHERMODE_H, Convert.ToUInt32(F3DEX095_Parameters.G_MDSFT_CYCLETYPE), 2, Type);
+        }
+        public byte[] gsDPSetPrimColor(uint M, uint L, uint R, uint G, uint B, uint A)
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+
+            binaryWriter.Write(BigEndian(
+                BitConverter.GetBytes(Convert.ToUInt32((F3DEX095_OpCodes.G_SETPRIMCOLOR) | ((M & 0xFF) << 8) | (L & 0xFF)) )
+            ));
+
+            binaryWriter.Write(BigEndian(
+                BitConverter.GetBytes(Convert.ToUInt32(((R & 0xFF) << 24) | ((G & 0xFF) << 16) | ((B & 0xFF) << 8) | (A & 0xFF) ))
+            ));
+
+            return memoryStream.ToArray();
+        }
+        /*
+        #define	sDPRGBColor(cmd, r, g, b, a)					\
+	    gsDPSetColor(cmd,						\
+			 (_SHIFTL(r, 24, 8) | _SHIFTL(g, 16, 8) | 	\
+			  _SHIFTL(b, 8, 8) | _SHIFTL(a, 0, 8)))
+        */
+
+        public byte[] sDPRGBColor(uint Command, uint R, uint G, uint B, uint A)
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+
+            binaryWriter.Write(BigEndian(
+                BitConverter.GetBytes(Command)));
+
+
+            binaryWriter.Write(BigEndian(
+                BitConverter.GetBytes(Convert.ToUInt32(((R & 0xFF) << 24) | ((G & 0xFF) << 16) | ((B & 0xFF) << 8) | (A & 0xFF)))
+            ));
+
+            return memoryStream.ToArray();
+        }
+
+        public byte[] gsDPSetEnvColor(uint R, uint G, uint B, uint A)
+        { 
+            MemoryStream memoryStream = new MemoryStream();
+            BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+
+            binaryWriter.Write(sDPRGBColor(F3DEX095_OpCodes.G_SETENVCOLOR,  R, G, B, A));
+
+            return memoryStream.ToArray();
+        }
+        public byte[] gsDPSetBlendColor(uint R, uint G, uint B, uint A)
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+
+            binaryWriter.Write(sDPRGBColor(F3DEX095_OpCodes.G_SETBLENDCOLOR, R, G, B, A));
+
+            return memoryStream.ToArray();
+        }
+        public byte[] gsDPSetFogColor(uint R, uint G, uint B, uint A)
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+
+            binaryWriter.Write(sDPRGBColor(F3DEX095_OpCodes.G_SETFOGCOLOR, R, G, B, A));
+
+            return memoryStream.ToArray();
+        }
+
         public byte[] gsDPSetColorImage(UInt32 Format, UInt32 Size, uint Width, UInt32 Address)
         {
             return gsSetImage(F3DEX095_OpCodes.G_SETCIMG, Format, Size, Width, Address);
@@ -541,6 +640,7 @@ namespace F3DSharp
 
             return memoryStream.ToArray();
         }
+
         public byte[] gsNinLoadTextureImage(UInt32 TextureAddress, UInt32 TextureFormat, UInt32 Size, uint Width, uint Height, uint TextureMemory, uint Tile)
         {
             MemoryStream memoryStream = new MemoryStream();
@@ -585,11 +685,35 @@ namespace F3DSharp
             binaryWriter.Write(gsDPSetTile(TextureFormat, Size, ((((Width) * ByteSize[Size]) + 7) >> 3), 0, 0, PaletteBanks, CT, MT, ST, CS, MS, SS));
             binaryWriter.Write(gsDPSetTileSize(0, 0, 0,
                 ((Width) - 1) << Convert.ToInt32(F3DEX095_Parameters.G_TEXTURE_IMAGE_FRAC),
-                ((Height) - 1) << Convert.ToInt32(F3DEX095_Parameters.G_TEXTURE_IMAGE_FRAC)));
+                ((Height) - 1) << Convert.ToInt32(F3DEX095_Parameters.G_TEXTURE_IMAGE_FRAC))
+            );
 
             return memoryStream.ToArray();
         }
 
+        public byte[] gsDPLoadTextureBlock_Tile(UInt32 TextureAddress, UInt32 TextureFormat, UInt32 Size, uint Width, uint Height, uint PaletteBanks, uint CS, uint MS, uint SS, uint CT, uint MT, uint ST, uint LoadTile, uint RenderTile, uint TMEM)
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+            UInt32[] INCRSize = { 3, 1, 0, 0 };
+            Int32[] ShiftSize = { 2, 1, 0, 0 };
+            UInt32[] LoadBlockSize = { 2, 2, 2, 4 };
+            UInt32[] ByteSize = { 0, 1, 2, 4 };
+
+            
+            binaryWriter.Write(gsDPSetTextureImage(TextureFormat, LoadBlockSize[Size], 1, TextureAddress));            
+            binaryWriter.Write(gsDPSetTile(TextureFormat, LoadBlockSize[Size], 0, TMEM, LoadTile, 0, CT, MT, ST, CS, MS, SS));
+            binaryWriter.Write(gsDPLoadSync());            
+            binaryWriter.Write(gsDPLoadBlock(LoadTile, 0, 0, (((Width * Height) + INCRSize[Size]) >> ShiftSize[Size]) - 1, CALCDXT(Width, ByteSize[Size])));
+            binaryWriter.Write(gsDPPipeSync());
+            binaryWriter.Write(gsDPSetTile(TextureFormat, Size, (((Width * ByteSize[Size]) + 7) >> 3), TMEM, RenderTile, PaletteBanks, CT, MT, ST, CS, MS, SS));
+            binaryWriter.Write(gsDPSetTileSize(RenderTile, 0, 0,
+                (Width - 1) << Convert.ToInt32(F3DEX095_Parameters.G_TEXTURE_IMAGE_FRAC),
+                (Height - 1) << Convert.ToInt32(F3DEX095_Parameters.G_TEXTURE_IMAGE_FRAC))
+            );
+
+            return memoryStream.ToArray();
+        }
 
         public byte[] gsDPLoadTextureBlock_4b(UInt32 TextureAddress, UInt32 TextureFormat, uint Width, uint Height, uint PaletteBanks, uint CS, uint MS, uint SS, uint CT, uint MT, uint ST)
         {
@@ -610,6 +734,30 @@ namespace F3DSharp
             binaryWriter.Write(gsDPSetTileSize(F3DEX095_OpCodes.G_TX_RENDERTILE, 0, 0,
                 ((Width) - 1) << Convert.ToInt32(F3DEX095_Parameters.G_TEXTURE_IMAGE_FRAC),
                 ((Height) - 1) << Convert.ToInt32(F3DEX095_Parameters.G_TEXTURE_IMAGE_FRAC)));
+
+            return memoryStream.ToArray();
+        }
+
+
+        public byte[] gsDPLoadTextureBlock_4b_Tile(UInt32 TextureAddress, UInt32 TextureFormat, uint Width, uint Height, uint PaletteBanks, uint CS, uint MS, uint SS, uint CT, uint MT, uint ST, uint LoadTile, uint RenderTile, uint TMEM)
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+            UInt32[] INCRSize = { 3, 1, 0, 0 };
+            Int32[] ShiftSize = { 2, 1, 0, 0 };
+            UInt32[] LoadBlockSize = { 2, 2, 2, 4 };
+            UInt32[] ByteSize = { 0, 1, 2, 4 };
+            
+            binaryWriter.Write(gsDPSetTextureImage(TextureFormat, F3DEX095_Parameters.G_IM_SIZ_16b, 1, TextureAddress));
+            binaryWriter.Write(gsDPSetTile(TextureFormat, F3DEX095_Parameters.G_IM_SIZ_16b, 0, TMEM, LoadTile, 0, CT, MT, ST, CS, MS, SS));
+            binaryWriter.Write(gsDPLoadSync());
+            binaryWriter.Write(gsDPLoadBlock(LoadTile, 0, 0,(((Width * Height) + 3) >> 2) - 1, CALCDXT_4b(Width)));
+            binaryWriter.Write(gsDPPipeSync());
+            binaryWriter.Write(gsDPSetTile(TextureFormat, F3DEX095_Parameters.G_IM_SIZ_4b,(((Width >> 1) + 7) >> 3),
+                TMEM, RenderTile, PaletteBanks, CT, MT, ST, CS, MS, SS));
+            binaryWriter.Write(gsDPSetTileSize(RenderTile, 0, 0,
+                (Width - 1) << Convert.ToInt32(F3DEX095_Parameters.G_TEXTURE_IMAGE_FRAC),
+                (Height - 1) << Convert.ToInt32(F3DEX095_Parameters.G_TEXTURE_IMAGE_FRAC)));
 
             return memoryStream.ToArray();
         }
@@ -654,27 +802,47 @@ namespace F3DSharp
 
             return memoryStream.ToArray();
         }
-        /* 
-        #define	gDPLoadTextureBlock(pkt, timg, fmt, siz, width, height,		\
-		        pal, cms, cmt, masks, maskt, shifts, shiftt)		\
-        {									\
-	        gDPSetTextureImage(pkt, fmt, siz##_LOAD_BLOCK, 1, timg);	\
-	        gDPSetTile(pkt, fmt, siz##_LOAD_BLOCK, 0, 0, G_TX_LOADTILE, 	\
-		        0 , cmt, maskt, shiftt, cms, masks, shifts);		\
-	        gDPLoadSync(pkt);						\
-	        gDPLoadBlock(pkt, G_TX_LOADTILE, 0, 0, 				\
-		        (((width)*(height) + siz##_INCR) >> siz##_SHIFT) -1,	\
-		        CALC_DXT(width, siz##_BYTES)); 				\
-	        gDPPipeSync(pkt);						\
-	        gDPSetTile(pkt, fmt, siz,					\
-		        (((width) * siz##_LINE_BYTES)+7)>>3, 0,			\
-		        G_TX_RENDERTILE, pal, cmt, maskt, shiftt, cms, masks,	\
-		        shifts);						\
-	        gDPSetTileSize(pkt, G_TX_RENDERTILE, 0, 0,			\
-		        ((width)-1) << G_TEXTURE_IMAGE_FRAC,			\
-		        ((height)-1) << G_TEXTURE_IMAGE_FRAC)			\
-}
 
-        */
+
+
+        public byte[] gsDPLoadTextureTile_4b_Tile(UInt32 TextureAddress, UInt32 TextureFormat, UInt32 TWidth, UInt32 THeight, UInt32 ULS, UInt32 ULT, UInt32 LRS, UInt32 LRT, UInt32 PAL, UInt32 CMS, UInt32 CMT, UInt32 MaskS, UInt32 MaskT, UInt32 ShiftS, UInt32 ShiftT, uint LoadTile, uint RenderTile, uint TMEM)
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+
+            //
+            
+            binaryWriter.Write(gsDPSetTextureImage(TextureFormat, F3DEX095_Parameters.G_IM_SIZ_8b, (TWidth >> 1), TextureAddress));
+            
+            binaryWriter.Write(gsDPSetTile(TextureFormat, F3DEX095_Parameters.G_IM_SIZ_8b,
+                (((((LRS) - (ULS) + 1) >> 1) + 7) >> 3), TMEM, LoadTile, 0, CMT, MaskT, ShiftT, CMS, MaskS, ShiftS)
+            );
+
+            binaryWriter.Write(gsDPLoadSync());
+
+            binaryWriter.Write(gsDPLoadTile(LoadTile,
+                (ULS << 1),
+                (ULT << 2),
+                (LRS << 1),
+                (LRT << 2))
+            );
+
+            binaryWriter.Write(gsDPPipeSync());
+
+            binaryWriter.Write(gsDPSetTile(TextureFormat, F3DEX095_Parameters.G_IM_SIZ_4b, (((((LRS) - (ULS) + 1) >> 1) + 7) >> 3), TMEM,
+                RenderTile, PAL, CMT, MaskT, ShiftT, CMS, MaskS, ShiftS)
+            );
+
+            binaryWriter.Write(gsDPSetTileSize(RenderTile,
+                (ULS << 2),
+                (ULT << 2),
+                (LRS << 2),
+                (LRT << 2))
+            );
+
+            //
+
+            return memoryStream.ToArray();
+        }
     }
 }

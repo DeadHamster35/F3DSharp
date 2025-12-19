@@ -1,0 +1,58 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\AuditorFOB\\Desktop\\Code\\F3DSharp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C18675DA-D7C6-4C6E-AA35-B16EE02968EF}|F3DSharp.csproj|C:\\Users\\AuditorFOB\\Desktop\\Code\\F3DSharp\\f3dex 0.95 parameters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C18675DA-D7C6-4C6E-AA35-B16EE02968EF}|F3DSharp.csproj|solutionrelative:f3dex 0.95 parameters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C18675DA-D7C6-4C6E-AA35-B16EE02968EF}|F3DSharp.csproj|c:\\users\\auditorfob\\desktop\\code\\f3dsharp\\f3dex 0.95.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C18675DA-D7C6-4C6E-AA35-B16EE02968EF}|F3DSharp.csproj|solutionrelative:f3dex 0.95.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "F3DEX 0.95.cs",
+              "DocumentMoniker": "C:\\Users\\AuditorFOB\\Desktop\\Code\\F3DSharp\\F3DEX 0.95.cs",
+              "RelativeDocumentMoniker": "F3DEX 0.95.cs",
+              "ToolTip": "C:\\Users\\AuditorFOB\\Desktop\\Code\\F3DSharp\\F3DEX 0.95.cs",
+              "RelativeToolTip": "F3DEX 0.95.cs",
+              "ViewState": "AgIAAPACAAAAAAAAAAAowMoCAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-09T09:01:18.439Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "F3DEX 0.95 Parameters.cs",
+              "DocumentMoniker": "C:\\Users\\AuditorFOB\\Desktop\\Code\\F3DSharp\\F3DEX 0.95 Parameters.cs",
+              "RelativeDocumentMoniker": "F3DEX 0.95 Parameters.cs",
+              "ToolTip": "C:\\Users\\AuditorFOB\\Desktop\\Code\\F3DSharp\\F3DEX 0.95 Parameters.cs",
+              "RelativeToolTip": "F3DEX 0.95 Parameters.cs",
+              "ViewState": "AgIAADsCAAAAAAAAAAAAAKkBAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-28T06:02:21.102Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

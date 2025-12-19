@@ -338,6 +338,12 @@ namespace F3DSharp
             return gsSPSetOtherMode(F3DEX2_OpCodes.G_SETOTHERMODE_H, Convert.ToUInt32(F3DEX2_Parameters.G_MDSFT_TEXTLUT), 2, Type);
         }
 
+
+        public byte[] gsDPSetTextureFilter(UInt32 Type)
+        {
+            return gsSPSetOtherMode(F3DEX095_OpCodes.G_SETOTHERMODE_H, Convert.ToUInt32(F3DEX095_Parameters.G_MDSFT_TEXTFILT), 2, Type);
+        }
+
         public byte[] gsSPSetOtherMode(UInt32 Command, UInt32 Soft, UInt32 Len, UInt32 Data)
         {
             MemoryStream memoryStream = new MemoryStream();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -82,7 +83,40 @@ namespace F3DSharp
             "G_CC_DECALRGB2"
             
         };
-
+        public static string[] RenderModeNamesSimple = new string[]
+        {
+            "G_RM_AA_ZB_OPA_SURF",
+            "G_RM_AA_ZB_OPA_SURF2",
+            "G_RM_AA_ZB_XLU_SURF",
+            "G_RM_AA_ZB_XLU_SURF2",
+            "G_RM_AA_ZB_OPA_DECAL",
+            "G_RM_AA_ZB_OPA_DECAL2",
+            "G_RM_AA_ZB_XLU_DECAL",
+            "G_RM_AA_ZB_XLU_DECAL2",
+            "G_RM_AA_ZB_OPA_INTER",
+            "G_RM_AA_ZB_OPA_INTER2",
+            "G_RM_AA_ZB_XLU_INTER",
+            "G_RM_AA_ZB_XLU_INTER2",
+            "G_RM_AA_ZB_TEX_EDGE",
+            "G_RM_AA_ZB_TEX_EDGE2",
+            "G_RM_AA_ZB_TEX_INTER",
+            "G_RM_AA_ZB_TEX_INTER2",
+            "G_RM_FOG_SHADE_A",
+            "G_RM_FOG_PRIM_A",
+            "G_RM_PASS",
+            "G_RM_RA_ZB_OPA_SURF",
+            "G_RM_RA_ZB_OPA_SURF2",
+            "G_RM_ZB_OPA_SURF",
+            "G_RM_ZB_OPA_SURF2",
+            "G_RM_ZB_XLU_SURF",
+            "G_RM_ZB_XLU_SURF2",
+            "G_RM_ZB_OPA_DECAL",
+            "G_RM_ZB_OPA_DECAL2",
+            "G_RM_ZB_XLU_DECAL",
+            "G_RM_ZB_XLU_DECAL2",
+            "G_RM_ZB_TEX_EDGE",
+            "G_RM_ZB_TEX_EDGE2",
+        };
 
         public static string[] RenderModeNames = new string[]
         {
@@ -119,6 +153,8 @@ namespace F3DSharp
             "G_RM_FOG_SHADE_A",
             "G_RM_FOG_PRIM_A",
             "G_RM_PASS",
+            "G_RM_RA_ZB_OPA_SURF",
+            "G_RM_RA_ZB_OPA_SURF2",
             "G_RM_ZB_OPA_SURF",
             "G_RM_ZB_OPA_SURF2",
             "G_RM_ZB_XLU_SURF",
@@ -176,14 +212,14 @@ namespace F3DSharp
             "SHADE",
             "ENVIRONMENT",
             "CENTER",
-             "SCALE",
-             "COMBINED_ALPHA",
-             "TEXEL0_ALPHA",
+            "SCALE",
+            "COMBINED_ALPHA",
+            "TEXEL0_ALPHA",
             "TEXEL1_ALPHA",
             "PRIMITIVE_ALPHA",
             "SHADE_ALPHA",
             "ENV_ALPHA",
-             "LOD_FRACTION",
+            "LOD_FRACTION",
             "PRIM_LOD_FRAC",
             "NOISE",
             "K4",
@@ -197,16 +233,16 @@ namespace F3DSharp
 
         public static string[] GACModeNames = new string[]
         {
-            "G_ACMUX_COMBINED",
-            "G_ACMUX_TEXEL0",
-            "G_ACMUX_TEXEL1",
-            "G_ACMUX_PRIMITIVE",
-            "G_ACMUX_SHADE",
-            "G_ACMUX_ENVIRONMENT",
-            "G_ACMUX_LOD_FRACTION",
-            "G_ACMUX_PRIM_LOD_FRAC",
-            "G_ACMUX_1",
-            "G_ACMUX_0"
+            "COMBINED",
+            "TEXEL0",
+            "TEXEL1",
+            "PRIMITIVE",
+            "SHADE",
+            "ENVIRONMENT",
+            "LOD_FRACTION",
+            "PRIM_LOD_FRAC",
+            "1",
+            "0"
         };
 
 
@@ -235,6 +271,18 @@ namespace F3DSharp
         public static int GCCKEY_1 = 19;
         public static int GCCKEY_0 = 20;
 
+
+        
+        public static int GACKEY_COMBINED = 0;
+        public static int GACKEY_TEXEL0 = 1;
+        public static int GACKEY_TEXEL1 = 2;
+        public static int GACKEY_PRIMITIVE = 3;
+        public static int GACKEY_SHADE = 4;
+        public static int GACKEY_ENVIRONMENT = 5;
+        public static int GACKEY_LOD_FRACTION = 6;
+        public static int GACKEY_PRIM_LOD_FRAC = 7;
+        public static int GACKEY_1 = 8;
+        public static int GACKEY_0 = 9;
 
 
 
@@ -274,16 +322,6 @@ namespace F3DSharp
         public static UInt32 G_ACMUX_1 = 6;
         public static UInt32 G_ACMUX_0 = 7;
 
-        public static int GACKEY_COMBINED = 0;
-        public static int GACKEY_TEXEL0 = 1;
-        public static int GACKEY_TEXEL1 = 2;
-        public static int GACKEY_PRIMITIVE = 3;
-        public static int GACKEY_SHADE = 4;
-        public static int GACKEY_ENVIRONMENT = 5;
-        public static int GACKEY_LOD_FRACTION = 6;
-        public static int GACKEY_PRIM_LOD_FRAC = 7;
-        public static int GACKEY_1 = 8;
-        public static int GACKEY_0 = 9;
         /*
  * G_SETOTHERMODE_L sft: shift count
  */
@@ -381,51 +419,189 @@ namespace F3DSharp
             G_CCMUX_0
         };
 
+        public static UInt32[] AlphaCombineModes = new UInt32[]
+        {
+            G_ACMUX_COMBINED,
+            G_ACMUX_TEXEL0,
+            G_ACMUX_TEXEL1,
+            G_ACMUX_PRIMITIVE,
+            G_ACMUX_SHADE,
+            G_ACMUX_ENVIRONMENT,
+            G_ACMUX_LOD_FRACTION,
+            G_ACMUX_PRIM_LOD_FRAC,
+            G_ACMUX_1,
+            G_ACMUX_0
+        };
 
+        public static UInt32[] G_CC_PRIMITIVE = new UInt32[] { 
+            ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE], 
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_PRIMITIVE] 
+        };
 
-        public static UInt32[] G_CC_PRIMITIVE = new UInt32[] { ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE] };
-        public static UInt32[] G_CC_SHADE = new UInt32[] {      ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE] };
-        public static UInt32[] G_CC_MODULATEI = new UInt32[] {      ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE] };
-        public static UInt32[] G_CC_MODULATEIA = new UInt32[] {     ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0] };
-        public static UInt32[] G_CC_MODULATEIDECALA = new UInt32[] {    ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0] };
+        public static UInt32[] G_CC_SHADE = new UInt32[] {      
+            ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_SHADE] 
+        };
+
+        public static UInt32[] G_CC_MODULATEI = new UInt32[] {      
+            ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_SHADE] 
+        };
+
+        public static UInt32[] G_CC_MODULATEIA = new UInt32[] {     
+            ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0],
+            AlphaCombineModes[GACKEY_TEXEL0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_SHADE], AlphaCombineModes[GACKEY_0] 
+        };
+
+        public static UInt32[] G_CC_MODULATEIDECALA = new UInt32[] {    
+            ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_TEXEL0] 
+        };
+
         public static UInt32[] G_CC_MODULATERGB = G_CC_MODULATEI ;
         public static UInt32[] G_CC_MODULATERGBA = G_CC_MODULATEIA;
         public static UInt32[] G_CC_MODULATERGBDECALA = G_CC_MODULATEIDECALA;
-        public static UInt32[] G_CC_MODULATEI_PRIM = new UInt32[] { ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE] };
-        public static UInt32[] G_CC_MODULATEIA_PRIM = new UInt32[] {    ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_0] };
-        public static UInt32[] G_CC_MODULATEIDECALA_PRIM = new UInt32[] {   ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0] };
+
+        public static UInt32[] G_CC_MODULATEI_PRIM = new UInt32[] { 
+            ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_0],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_PRIMITIVE] 
+        };
+
+        public static UInt32[] G_CC_MODULATEIA_PRIM = new UInt32[] {    
+            ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_0],
+            AlphaCombineModes[GACKEY_TEXEL0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_PRIMITIVE], AlphaCombineModes[GACKEY_0] 
+        };
+
+        public static UInt32[] G_CC_MODULATEIDECALA_PRIM = new UInt32[] {   
+            ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_0],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_TEXEL0] 
+        };
+
         public static UInt32[] G_CC_MODULATERGB_PRIM = G_CC_MODULATEI_PRIM;
         public static UInt32[] G_CC_MODULATERGBA_PRIM = G_CC_MODULATEIA_PRIM;
         public static UInt32[] G_CC_MODULATERGBDECALA_PRIM = G_CC_MODULATEIDECALA_PRIM;
-        public static UInt32[] G_CC_DECALRGB = new UInt32[] {       ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE] };
-        public static UInt32[] G_CC_DECALRGBA = new UInt32[] {      ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0] };
-        public static UInt32[] G_CC_BLENDI = new UInt32[] {     ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE] };
-        public static UInt32[] G_CC_BLENDIA = new UInt32[] {        ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0] };
-        public static UInt32[] G_CC_BLENDIDECALA = new UInt32[] {   ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0] };
-        public static UInt32[] G_CC_BLENDRGBA = new UInt32[] {      ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_TEXEL0_ALPHA], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE] };
-        public static UInt32[] G_CC_BLENDRGBDECALA = new UInt32[] { ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_TEXEL0_ALPHA], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0] };
-        public static UInt32[] G_CC_ADDRGB = new UInt32[] {     ColorCombineModes[GCCKEY_1], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE] };
-        public static UInt32[] G_CC_ADDRGBDECALA = new UInt32[] {   ColorCombineModes[GCCKEY_1], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0] };
-        public static UInt32[] G_CC_REFLECTRGB = new UInt32[] {     ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE] };
-        public static UInt32[] G_CC_REFLECTRGBDECALA = new UInt32[] {   ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0] };
-        public static UInt32[] G_CC_HILITERGB = new UInt32[] {      ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE] };
-        public static UInt32[] G_CC_HILITERGBA = new UInt32[] {     ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE] };
-        public static UInt32[] G_CC_HILITERGBDECALA = new UInt32[] {    ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0] };
-        public static UInt32[] G_CC_SHADEDECALA = new UInt32[] {    ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0] };
-        public static UInt32[] G_CC_BLENDPE = new UInt32[] {        ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0] };
-        public static UInt32[] G_CC_BLENDPEDECALA = new UInt32[] {  ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0] };
+
+        public static UInt32[] G_CC_DECALRGB = new UInt32[] {       
+            ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_SHADE] 
+        };
+
+        public static UInt32[] G_CC_DECALRGBA = new UInt32[] {      
+            ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_TEXEL0] 
+        };
+
+        public static UInt32[] G_CC_BLENDI = new UInt32[] {     
+            ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_SHADE] 
+        };
+
+        public static UInt32[] G_CC_BLENDIA = new UInt32[] {        
+            ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE],
+            AlphaCombineModes[GACKEY_TEXEL0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_SHADE], AlphaCombineModes[GACKEY_0] 
+        };
+
+        public static UInt32[] G_CC_BLENDIDECALA = new UInt32[] {   
+            ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_TEXEL0] 
+        };
+
+        public static UInt32[] G_CC_BLENDRGBA = new UInt32[] {      
+            ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_TEXEL0_ALPHA], ColorCombineModes[GCCKEY_SHADE],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_SHADE] 
+        };
+
+        public static UInt32[] G_CC_BLENDRGBDECALA = new UInt32[] { 
+            ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_TEXEL0_ALPHA], ColorCombineModes[GCCKEY_SHADE],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_TEXEL0] 
+        };
+
+        public static UInt32[] G_CC_ADDRGB = new UInt32[] {     
+            ColorCombineModes[GCCKEY_1], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_SHADE] 
+        };
+
+        public static UInt32[] G_CC_ADDRGBDECALA = new UInt32[] {   
+            ColorCombineModes[GCCKEY_1], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_TEXEL0] 
+        };
+
+        public static UInt32[] G_CC_REFLECTRGB = new UInt32[] {     
+            ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_SHADE] 
+        };
+
+        public static UInt32[] G_CC_REFLECTRGBDECALA = new UInt32[] {   
+            ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_TEXEL0] 
+        };
+
+        public static UInt32[] G_CC_HILITERGB = new UInt32[] {      
+            ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_SHADE] 
+        };
+
+        public static UInt32[] G_CC_HILITERGBA = new UInt32[] {     
+            ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE],
+            AlphaCombineModes[GACKEY_PRIMITIVE], AlphaCombineModes[GACKEY_SHADE], AlphaCombineModes[GACKEY_TEXEL0], AlphaCombineModes[GACKEY_SHADE] 
+        };
+
+        public static UInt32[] G_CC_HILITERGBDECALA = new UInt32[] {    
+            ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_SHADE],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_TEXEL0] 
+        };
+
+        public static UInt32[] G_CC_SHADEDECALA = new UInt32[] {    
+            ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_TEXEL0] 
+        };
+
+        public static UInt32[] G_CC_BLENDPE = new UInt32[] {        
+            ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_ENVIRONMENT],
+            AlphaCombineModes[GACKEY_TEXEL0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_SHADE], AlphaCombineModes[GACKEY_0] 
+        };
+
+        public static UInt32[] G_CC_BLENDPEDECALA = new UInt32[] {  
+            ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_ENVIRONMENT], ColorCombineModes[GCCKEY_TEXEL0], ColorCombineModes[GCCKEY_ENVIRONMENT],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_TEXEL0] 
+        };
+
         
-        public static UInt32[] G_CC_PASS2 = new UInt32[] { ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_COMBINED] };
-        public static UInt32[] G_CC_MODULATEI2 = new UInt32[] { ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE] };
-        public static UInt32[] G_CC_MODULATEIA2 = new UInt32[] { ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0] };
+        public static UInt32[] G_CC_PASS2 = new UInt32[] { 
+            ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_COMBINED],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_COMBINED] 
+        };
+
+        public static UInt32[] G_CC_MODULATEI2 = new UInt32[] { 
+            ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_SHADE] 
+        };
+
+        public static UInt32[] G_CC_MODULATEIA2 = new UInt32[] { 
+            ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE], ColorCombineModes[GCCKEY_0],
+            AlphaCombineModes[GACKEY_COMBINED], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_SHADE], AlphaCombineModes[GACKEY_0] 
+        };
+
         public static UInt32[] G_CC_MODULATERGB2 = G_CC_MODULATEI2;
         public static UInt32[] G_CC_MODULATERGBA2 = G_CC_MODULATEIA2;
-        public static UInt32[] G_CC_MODULATEI_PRIM2 = new UInt32[] { ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE] };
-        public static UInt32[] G_CC_MODULATEIA_PRIM2 = new UInt32[] { ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_0] };
+
+        public static UInt32[] G_CC_MODULATEI_PRIM2 = new UInt32[] { 
+            ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_0],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_PRIMITIVE] 
+        };
+
+        public static UInt32[] G_CC_MODULATEIA_PRIM2 = new UInt32[] { 
+            ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_PRIMITIVE], ColorCombineModes[GCCKEY_0],
+            AlphaCombineModes[GACKEY_COMBINED], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_PRIMITIVE], AlphaCombineModes[GACKEY_0] 
+        };
 
         public static UInt32[] G_CC_MODULATERGB_PRIM2 = G_CC_MODULATEI_PRIM2;
         public static UInt32[] G_CC_MODULATERGBA_PRIM2 = G_CC_MODULATEIA_PRIM2;
-        public static UInt32[] G_CC_DECALRGB2 = new UInt32[] { ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_COMBINED], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_SHADE] };
+
+        public static UInt32[] G_CC_DECALRGB2 = new UInt32[] { 
+            ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_0], ColorCombineModes[GCCKEY_COMBINED],
+            AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_0], AlphaCombineModes[GACKEY_SHADE] 
+        };
 
 
         public static UInt32[][] GCCModes = new UInt32[][] 
@@ -474,19 +650,6 @@ namespace F3DSharp
 
         };
 
-        public static UInt32[] GACModes = new UInt32[]
-        {
-            G_ACMUX_COMBINED,
-            G_ACMUX_TEXEL0,
-            G_ACMUX_TEXEL1,
-            G_ACMUX_PRIMITIVE,
-            G_ACMUX_SHADE,
-            G_ACMUX_ENVIRONMENT,
-            G_ACMUX_LOD_FRACTION,
-            G_ACMUX_PRIM_LOD_FRAC,
-            G_ACMUX_1,
-            G_ACMUX_0
-        };
 
 
 
@@ -564,7 +727,12 @@ namespace F3DSharp
         public static UInt32 G_TF_AVERAGE = Convert.ToUInt32(3 << G_MDSFT_TEXTFILT);
         public static UInt32 G_TF_BILERP = Convert.ToUInt32(2 << G_MDSFT_TEXTFILT);
 
-                /* G_SETOTHERMODE_H gSetTextureConvert */
+        public static UInt32[] TextureFilters = new UInt32[] { G_TF_POINT, G_TF_AVERAGE, G_TF_BILERP};
+        public static string[] TextureFilterNames = new string[] { "G_TF_POINT", "G_TF_AVERAGE", "G_TF_BILERP" };
+
+
+
+        /* G_SETOTHERMODE_H gSetTextureConvert */
         public static UInt32 G_TC_CONV = Convert.ToUInt32(0 << G_MDSFT_TEXTCONV);
         public static UInt32 G_TC_FILTCONV = Convert.ToUInt32(5 << G_MDSFT_TEXTCONV);
         public static UInt32 G_TC_FILT = Convert.ToUInt32(6 << G_MDSFT_TEXTCONV);
@@ -1437,6 +1605,40 @@ namespace F3DSharp
 
 
 
+        public static UInt32[] RenderModesSimple = new UInt32[]
+        {
+            G_RM_AA_ZB_OPA_SURF,
+            G_RM_AA_ZB_OPA_SURF2,
+            G_RM_AA_ZB_XLU_SURF,
+            G_RM_AA_ZB_XLU_SURF2,
+            G_RM_AA_ZB_OPA_DECAL,
+            G_RM_AA_ZB_OPA_DECAL2,
+            G_RM_AA_ZB_XLU_DECAL,
+            G_RM_AA_ZB_XLU_DECAL2,
+            G_RM_AA_ZB_OPA_INTER,
+            G_RM_AA_ZB_OPA_INTER2,
+            G_RM_AA_ZB_XLU_INTER,
+            G_RM_AA_ZB_XLU_INTER2,
+            G_RM_AA_ZB_TEX_EDGE,
+            G_RM_AA_ZB_TEX_EDGE2,
+            G_RM_AA_ZB_TEX_INTER,
+            G_RM_AA_ZB_TEX_INTER2,
+            G_RM_FOG_SHADE_A,
+            G_RM_FOG_PRIM_A,
+            G_RM_PASS,
+            G_RM_RA_ZB_OPA_SURF,
+            G_RM_RA_ZB_OPA_SURF2,
+            G_RM_ZB_OPA_SURF,
+            G_RM_ZB_OPA_SURF2,
+            G_RM_ZB_XLU_SURF,
+            G_RM_ZB_XLU_SURF2,
+            G_RM_ZB_OPA_DECAL,
+            G_RM_ZB_OPA_DECAL2,
+            G_RM_ZB_XLU_DECAL,
+            G_RM_ZB_XLU_DECAL2,
+            G_RM_ZB_TEX_EDGE,
+            G_RM_ZB_TEX_EDGE2,
+        };
 
         public static UInt32[] RenderModes = new UInt32[]
         {
@@ -1473,6 +1675,8 @@ namespace F3DSharp
             G_RM_FOG_SHADE_A,
             G_RM_FOG_PRIM_A,
             G_RM_PASS,
+            G_RM_RA_ZB_OPA_SURF,
+            G_RM_RA_ZB_OPA_SURF2,
             G_RM_ZB_OPA_SURF,
             G_RM_ZB_OPA_SURF2,
             G_RM_ZB_XLU_SURF,
